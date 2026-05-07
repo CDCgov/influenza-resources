@@ -1,0 +1,168 @@
+name: Add Resource from Issue
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  create-resource-pr:
+    if: contains(github.event.issue.labels.*.name, 'add-resource')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse issue and create resource file
+        uses: actions/github-script@v7
+        id: parse
+        with:
+          script: |
+            const issueBody = context.payload.issue.body || '';
+            const issueNumber = context.payload.issue.number;
+
+            // Parse YAML issue form fields (### Label\n\nValue)
+            function parseField(body, label) {
+              const pattern = new RegExp(
+                `### ${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\n\\n([\\s\\S]*?)(?=\\n### |$)`
+              );
+              const match = body.match(pattern);
+              if (!match) return '';
+              return match[1].trim().replace(/^_No response_$/i, '');
+            }
+
+            const title      = parseField(issueBody, 'Resource Title');
+            const category   = parseField(issueBody, 'Category');
+            const summary    = parseField(issueBody, 'Summary');
+            const sourceUrl  = parseField(issueBody, 'Source URL');
+            const localPath  = parseField(issueBody, 'Local File Path');
+            const pubDate    = parseField(issueBody, 'Publication Date');
+            const tagsRaw    = parseField(issueBody, 'Tags');
+            const authorsRaw = parseField(issueBody, 'Authors');
+            const revision   = parseField(issueBody, 'Revision');
+            const supersedes = parseField(issueBody, 'Supersedes');
+
+            // Validate required fields
+            if (!title || !category || !summary) {
+              core.setFailed('Missing required fields: title, category, and summary are all required.');
+              return;
+            }
+
+            const validCategories = ['laboratory', 'zoonotic', 'epidemiology', 'training', 'software'];
+            if (!validCategories.includes(category)) {
+              core.setFailed(`Invalid category "${category}". Must be one of: ${validCategories.join(', ')}`);
+              return;
+            }
+
+            // Build slug from title
+            const slug = title
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-+|-+$/g, '')
+              .substring(0, 80);
+
+            // Build YAML front matter
+            let frontMatter = `---\ntitle: "${title.replace(/"/g, '\\"')}"\ncategory: ${category}\nsummary: >-\n`;
+            // Wrap summary lines
+            const summaryLines = summary.match(/.{1,78}(\s|$)/g) || [summary];
+            for (const line of summaryLines) {
+              frontMatter += `  ${line.trim()}\n`;
+            }
+
+            if (sourceUrl)  frontMatter += `source_url: "${sourceUrl}"\n`;
+            if (localPath)  frontMatter += `local_path: "${localPath}"\n`;
+            if (pubDate)    frontMatter += `pub_date: ${pubDate}\n`;
+
+            if (tagsRaw) {
+              frontMatter += `tags:\n`;
+              for (const tag of tagsRaw.split(',')) {
+                const t = tag.trim();
+                if (t) frontMatter += `  - ${t}\n`;
+              }
+            }
+
+            if (authorsRaw) {
+              frontMatter += `authors:\n`;
+              for (const author of authorsRaw.split(',')) {
+                const a = author.trim();
+                if (a) frontMatter += `  - "${a}"\n`;
+              }
+            }
+
+            if (revision)   frontMatter += `revision: "${revision}"\n`;
+            if (supersedes)  frontMatter += `supersedes: "${supersedes}"\n`;
+
+            frontMatter += `---\n`;
+
+            core.setOutput('slug', slug);
+            core.setOutput('category', category);
+            core.setOutput('front_matter', frontMatter);
+            core.setOutput('issue_number', issueNumber.toString());
+            core.setOutput('title', title);
+
+      - name: Create branch and resource file
+        env:
+          SLUG: ${{ steps.parse.outputs.slug }}
+          CATEGORY: ${{ steps.parse.outputs.category }}
+          FRONT_MATTER: ${{ steps.parse.outputs.front_matter }}
+          ISSUE_NUMBER: ${{ steps.parse.outputs.issue_number }}
+          TITLE: ${{ steps.parse.outputs.title }}
+        run: |
+          BRANCH="resource/issue-${ISSUE_NUMBER}-${SLUG}"
+          FILE_PATH="site/_resources/${CATEGORY}/${SLUG}.md"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "${BRANCH}"
+
+          mkdir -p "site/_resources/${CATEGORY}"
+          printf '%s' "${FRONT_MATTER}" > "${FILE_PATH}"
+
+          git add "${FILE_PATH}"
+          git commit -m "Add resource: ${TITLE} (closes #${ISSUE_NUMBER})"
+          git push origin "${BRANCH}"
+
+          echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "file_path=${FILE_PATH}" >> "$GITHUB_OUTPUT"
+        id: commit
+
+      - name: Create pull request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = parseInt('${{ steps.parse.outputs.issue_number }}');
+            const branch = '${{ steps.commit.outputs.branch }}';
+            const filePath = '${{ steps.commit.outputs.file_path }}';
+            const title = `${{ steps.parse.outputs.title }}`;
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Add resource: ${title}`,
+              head: branch,
+              base: context.payload.repository.default_branch,
+              body: [
+                `## Add Resource`,
+                ``,
+                `Auto-generated from issue #${issueNumber}.`,
+                ``,
+                `**File created:** \`${filePath}\``,
+                ``,
+                `Please review the resource metadata and merge when ready.`,
+                ``,
+                `Closes #${issueNumber}`,
+              ].join('\n'),
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `Pull request created: ${pr.html_url}\n\nThe resource file has been generated and is ready for review.`,
+            });

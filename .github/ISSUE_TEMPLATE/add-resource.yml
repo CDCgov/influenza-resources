@@ -1,0 +1,107 @@
+name: Add Resource
+description: Submit a new document or URL to be added to the resource site
+title: "[Resource] "
+labels: ["add-resource"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for submitting a resource! Fill out the fields below and a pull
+        request will be created automatically for review.
+
+  - type: input
+    id: title
+    attributes:
+      label: Resource Title
+      description: Human-readable title of the document or page
+      placeholder: "e.g. RT-PCR Protocol for Influenza A Subtyping"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Primary category for this resource
+      options:
+        - laboratory
+        - zoonotic
+        - epidemiology
+        - training
+        - software
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: 1–3 sentence plain-text description of the resource
+      placeholder: "Briefly describe what this resource covers…"
+    validations:
+      required: true
+
+  - type: input
+    id: source_url
+    attributes:
+      label: Source URL
+      description: Canonical URL (e.g. on cdc.gov). Leave blank if submitting a local file only.
+      placeholder: "https://www.cdc.gov/flu/..."
+    validations:
+      required: false
+
+  - type: input
+    id: local_path
+    attributes:
+      label: Local File Path
+      description: >-
+        Repo-relative path to a committed PDF/DOCX/PPTX (e.g.
+        docs/laboratory/my-file.pdf). Leave blank if providing a URL only.
+      placeholder: "docs/laboratory/LP-999Rev00D - My Document.pdf"
+    validations:
+      required: false
+
+  - type: input
+    id: pub_date
+    attributes:
+      label: Publication Date
+      description: ISO 8601 date of publication or clearance (YYYY-MM-DD)
+      placeholder: "2025-01-15"
+    validations:
+      required: false
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma-separated list of tags
+      placeholder: "sequencing, illumina, miseq"
+    validations:
+      required: false
+
+  - type: input
+    id: authors
+    attributes:
+      label: Authors
+      description: Author(s) or originating group (comma-separated)
+      placeholder: "CDC Influenza Division"
+    validations:
+      required: false
+
+  - type: input
+    id: revision
+    attributes:
+      label: Revision
+      description: Document revision identifier
+      placeholder: "Rev00D"
+    validations:
+      required: false
+
+  - type: input
+    id: supersedes
+    attributes:
+      label: Supersedes
+      description: Slug (filename without .md) of the resource this replaces, if any
+      placeholder: "my-old-resource-rev00"
+    validations:
+      required: false
