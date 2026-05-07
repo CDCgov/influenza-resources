@@ -43,6 +43,25 @@
   }
 }
 
+// Header home button
+.header-home {
+  display: flex;
+  align-items: center;
+  color: $black;
+  margin-right: 16px;
+  flex-shrink: 0;
+  &:hover {
+    color: $primary;
+  }
+}
+
+// Hero image
+.hero-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 360px;
+}
+
 // Header search box
 .header-search {
   display: flex;
