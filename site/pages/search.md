@@ -15,8 +15,8 @@ permalink: /search/
   </div>
 </div>
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-<script src="/pagefind/pagefind-ui.js"></script>
+<link href="{{ '/pagefind/pagefind-ui.css' | relative_url }}" rel="stylesheet">
+<script src="{{ '/pagefind/pagefind-ui.js' | relative_url }}"></script>
 <script>
   window.addEventListener('DOMContentLoaded', function () {
     var pf = new PagefindUI({

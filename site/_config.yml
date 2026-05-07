@@ -4,7 +4,7 @@
 # (commit a323305ac59c537850ad35334df7a10124d4ca80)
 # ──────────────────────────────────────────────
 
-baseurl: "/"
+baseurl: "/influenza-resources"
 permalink: pretty
 title: "CDC Influenza Division Resources"
 description: "A curated index of CDC-cleared documents and links from the CDC Influenza Division."

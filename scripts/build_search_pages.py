@@ -31,8 +31,9 @@ def _parse_front_matter(text: str) -> dict:
     return yaml.safe_load(m.group(1)) or {}
 
 
-def _slug_to_url(slug: str, category: str) -> str:
-    return f"/resources/{category}/{slug}/"
+def _slug_to_url(slug: str, category: str, baseurl: str = "") -> str:
+    prefix = baseurl.rstrip("/")
+    return f"{prefix}/resources/{category}/{slug}/"
 
 
 # ---------------------------------------------------------------------------
@@ -66,6 +67,11 @@ def main() -> int:
     site_dir = repo_root / "site" / "_site"
     output_dir = site_dir / "_search_pages"
 
+    # Read baseurl from Jekyll config
+    config_path = repo_root / "site" / "_config.yml"
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
+    baseurl = config.get("baseurl", "").rstrip("/")
+
     if not site_dir.is_dir():
         print("ERROR: _site/ not found — run `jekyll build` first", file=sys.stderr)
         return 1
@@ -82,7 +88,7 @@ def main() -> int:
 
         # Determine the URL for this resource
         source_url = fm.get("source_url", "")
-        url = source_url if source_url else _slug_to_url(slug, category)
+        url = source_url if source_url else _slug_to_url(slug, category, baseurl)
 
         # Try to find cached extracted text
         extracted_text = ""
