@@ -16,13 +16,18 @@ bodyClass: "page-home"
 <div class="strip">
   <div class="container pt-6 pb-6 pb-md-10">
     <h2 class="mb-4">Browse by Category</h2>
-    <div class="category-pills">
+    <div class="row">
       {% for cat in site.resource_categories %}
       {% assign cat_count = site.resources | where: "category", cat | size %}
-      <a href="{{ '/categories/' | append: cat | append: '/' | relative_url }}" class="category-pill">
-        <span class="category-pill-name">{{ cat | capitalize }}</span>
-        <span class="category-pill-count">{{ cat_count }}</span>
-      </a>
+      <div class="col-6 col-md-4 col-lg mb-3">
+        <a href="{{ '/categories/' | append: cat | append: '/' | relative_url }}" class="category-card">
+          <div class="category-card-image" style="background-image: url('{{ '/images/categories/' | append: cat | append: '.svg' | relative_url }}');"></div>
+          <div class="category-card-body">
+            <h3 class="category-card-title">{{ cat | capitalize }}</h3>
+            <span class="category-card-count">{{ cat_count }} resource{% if cat_count != 1 %}s{% endif %}</span>
+          </div>
+        </a>
+      </div>
       {% endfor %}
     </div>
   </div>
