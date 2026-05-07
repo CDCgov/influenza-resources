@@ -21,7 +21,14 @@ bodyClass: "page-home"
     <h2 class="mb-4">Browse by Category</h2>
     <div class="row">
       {% for cat in site.resource_categories %}
-      {% assign cat_count = site.resources | where: "category", cat | size %}
+      {% assign cat_count = 0 %}
+      {% for resource in site.resources %}
+        {% if resource.categories and resource.categories contains cat %}
+          {% assign cat_count = cat_count | plus: 1 %}
+        {% elsif resource.category == cat %}
+          {% assign cat_count = cat_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
       <div class="col-6 col-md-4 col-lg mb-3">
         <a href="{{ '/categories/' | append: cat | append: '/' | relative_url }}" class="category-card">
           <div class="category-card-image" style="background-image: url('{{ '/images/categories/' | append: cat | append: '.svg' | relative_url }}');"></div>
@@ -49,7 +56,13 @@ bodyClass: "page-home"
               <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
             </h3>
             <p>{{ resource.summary | truncate: 120 }}</p>
+            {% if resource.categories %}
+              {% for cat in resource.categories %}
+              <span class="badge badge-category">{{ cat | capitalize }}</span>
+              {% endfor %}
+            {% elsif resource.category %}
             <span class="badge badge-category">{{ resource.category | capitalize }}</span>
+            {% endif %}
           </div>
         </div>
       </div>

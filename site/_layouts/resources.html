@@ -23,7 +23,13 @@ bodyClass: "page-resources"
             <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
           </h2>
           <p>{{ resource.summary | truncate: 160 }}</p>
+          {% if resource.categories %}
+            {% for cat in resource.categories %}
+            <span class="badge badge-category">{{ cat | capitalize }}</span>
+            {% endfor %}
+          {% elsif resource.category %}
           <span class="badge badge-category">{{ resource.category | capitalize }}</span>
+          {% endif %}
         </div>
       </div>
     </div>

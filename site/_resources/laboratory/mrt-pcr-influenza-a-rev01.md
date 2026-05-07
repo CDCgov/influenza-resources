@@ -1,6 +1,8 @@
 ---
 title: "MRT-PCR of Influenza A Viruses for Sequencing (Rev01D)"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "PCR & Amplification"
 summary: >-
   Multi-segment reverse transcription PCR protocol for amplifying influenza A virus
   genome segments for sequencing. Superseded by Rev02D.

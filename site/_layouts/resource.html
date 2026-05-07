@@ -7,14 +7,25 @@ bodyClass: "page-resource"
   <div class="row justify-content-start">
     <div class="col-12 col-md-8">
       <div class="service service-single"
-           data-pagefind-meta="title:{{ page.title | escape }}, category:{{ page.category }}, summary:{{ page.summary | escape | truncate: 200 }}"
-           data-pagefind-filter="category:{{ page.category }}">
+           data-pagefind-meta="title:{{ page.title | escape }}, category:{% if page.categories %}{{ page.categories | join: ',' }}{% else %}{{ page.category }}{% endif %}, summary:{{ page.summary | escape | truncate: 200 }}"
+           data-pagefind-filter="category:{% if page.categories %}{{ page.categories | join: ',' }}{% else %}{{ page.category }}{% endif %}">
         <h1 class="title">{{ page.title }}</h1>
 
         <div class="resource-meta mb-4">
-          {% if page.category %}
+          {% if page.categories %}
+            {% for cat in page.categories %}
+            <span class="badge badge-category">
+              <a href="{{ '/categories/' | append: cat | append: '/' | relative_url }}">{{ cat | capitalize }}</a>
+            </span>
+            {% endfor %}
+          {% elsif page.category %}
           <span class="badge badge-category">
             <a href="{{ '/categories/' | append: page.category | append: '/' | relative_url }}">{{ page.category | capitalize }}</a>
+          </span>
+          {% endif %}
+          {% if page.fork_of %}
+          <span class="badge badge-fork" title="Fork of third-party repository">
+            <a href="{{ page.fork_of }}" target="_blank" rel="noopener noreferrer">&#x1F500; Fork</a>
           </span>
           {% endif %}
           {% if page.pub_date %}

@@ -1,6 +1,8 @@
 ---
 title: "RT-PCR of the SARS-CoV-2 S-gene for Sequencing"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "PCR & Amplification"
 summary: >-
   Reverse transcription PCR protocol targeting the SARS-CoV-2 S-gene to generate
   amplicons for downstream sequencing applications.

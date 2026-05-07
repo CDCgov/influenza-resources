@@ -1,6 +1,8 @@
 ---
 title: "DNA Quantification with Qubit dsDNA High Sensitivity Kit"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Sequencing & QC"
 summary: >-
   Procedure for quantifying double-stranded DNA using the Qubit fluorometer and
   the dsDNA High Sensitivity assay kit for quality control of sequencing libraries.

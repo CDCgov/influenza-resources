@@ -1,6 +1,8 @@
 ---
 title: "Performing a MiSeq Next Generation Sequencing Run"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Sequencing & QC"
 summary: >-
   Standard operating procedure for setting up and performing a next generation
   sequencing run on the Illumina MiSeq platform.

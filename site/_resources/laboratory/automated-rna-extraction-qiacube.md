@@ -1,6 +1,8 @@
 ---
 title: "Automated RNA Extraction using QIAcube HT"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Extraction & Purification"
 summary: >-
   Standard operating procedure for automated RNA extraction using the QIAcube HT
   instrument for influenza and respiratory virus sample processing.

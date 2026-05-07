@@ -1,6 +1,8 @@
 ---
 title: "Manual Procedure Illumina DNA Prep Library SOP"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Library Preparation"
 summary: >-
   Manual procedure for Illumina DNA Prep library preparation, covering tagmentation,
   cleanup, and amplification steps for sequencing library construction.

@@ -1,6 +1,8 @@
 ---
 title: "QIAxcel Sample Preparation and Quality Control Procedure"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Sequencing & QC"
 summary: >-
   Procedure for preparing samples and performing quality control analysis using
   the QIAxcel capillary electrophoresis system for PCR product verification.

@@ -15,8 +15,68 @@ bodyClass: "page-category"
 </div>
 
 <div class="container pt-6 pb-6">
+  {% assign category_resources = "" | split: "" %}
+  {% for resource in site.resources %}
+    {% if resource.categories and resource.categories contains page.category_slug %}
+      {% assign category_resources = category_resources | push: resource %}
+    {% elsif resource.category == page.category_slug %}
+      {% assign category_resources = category_resources | push: resource %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign has_subcategories = false %}
+  {% for resource in category_resources %}
+    {% if resource.subcategory %}
+      {% assign has_subcategories = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if has_subcategories %}
+    {% assign subcategories = category_resources | map: "subcategory" | compact | uniq %}
+    {% for subcat in subcategories %}
+    <h2 class="mt-4 mb-3">{{ subcat }}</h2>
+    <div class="row">
+      {% for resource in category_resources %}
+        {% if resource.subcategory == subcat %}
+        <div class="col-12 col-md-6 mb-3">
+          <div class="service service-summary">
+            <div class="service-content">
+              <h3 class="service-title">
+                <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
+              </h3>
+              <p>{{ resource.summary | truncate: 160 }}</p>
+              {% if resource.pub_date %}
+              <span class="resource-date">{{ resource.pub_date | date: "%B %d, %Y" }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+    {% assign uncategorized = category_resources | where: "subcategory", nil %}
+    {% if uncategorized.size > 0 %}
+    <h2 class="mt-4 mb-3">Other</h2>
+    <div class="row">
+      {% for resource in uncategorized %}
+      <div class="col-12 col-md-6 mb-3">
+        <div class="service service-summary">
+          <div class="service-content">
+            <h3 class="service-title">
+              <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
+            </h3>
+            <p>{{ resource.summary | truncate: 160 }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% else %}
   <div class="row">
-    {% assign category_resources = site.resources | where: "category", page.category_slug %}
     {% for resource in category_resources %}
     <div class="col-12 col-md-6 mb-3">
       <div class="service service-summary">
@@ -32,11 +92,14 @@ bodyClass: "page-category"
       </div>
     </div>
     {% endfor %}
+  </div>
+  {% endif %}
 
-    {% if category_resources.size == 0 %}
+  {% if category_resources.size == 0 %}
+  <div class="row">
     <div class="col-12">
       <p>No resources in this category yet. <a href="https://github.com/CDCgov/influenza-resources/issues/new?template=add-resource.yml" target="_blank" rel="noopener noreferrer">Submit one!</a></p>
     </div>
-    {% endif %}
   </div>
+  {% endif %}
 </div>

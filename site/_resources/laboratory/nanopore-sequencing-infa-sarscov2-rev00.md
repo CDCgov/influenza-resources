@@ -1,6 +1,8 @@
 ---
 title: "Native Library Prep & Nanopore Sequencing of InfA Virus & SARS-CoV-2 S-gene Amplicons (Rev00D)"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Library Preparation"
 summary: >-
   Protocol for native library preparation and Oxford Nanopore sequencing of
   influenza A virus and SARS-CoV-2 S-gene amplicons. Superseded by Rev01D.

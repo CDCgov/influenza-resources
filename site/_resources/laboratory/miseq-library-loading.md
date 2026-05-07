@@ -1,6 +1,8 @@
 ---
 title: "MiSeq Library Loading Preparation"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Library Preparation"
 summary: >-
   Standard operating procedure for preparing and loading sequencing libraries
   onto the Illumina MiSeq platform for influenza virus characterization.

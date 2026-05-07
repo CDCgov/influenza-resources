@@ -1,6 +1,8 @@
 ---
 title: "Multi-segment Reverse Transcription-PCR (M-RTPCR) of Influenza A and B"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "PCR & Amplification"
 summary: >-
   Protocol for multi-segment reverse transcription PCR of both influenza A and
   influenza B viruses, generating full-genome amplicons for sequencing.

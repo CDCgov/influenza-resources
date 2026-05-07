@@ -1,6 +1,8 @@
 ---
 title: "MRT-PCR Purification using Exonuclease"
-category: laboratory
+categories:
+  - laboratory
+subcategory: "Extraction & Purification"
 summary: >-
   Procedure for purifying MRT-PCR products using exonuclease treatment to remove
   residual primers and single-stranded DNA prior to library preparation.
