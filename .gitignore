@@ -1,0 +1,24 @@
+# Jekyll build output
+site/_site/
+site/.jekyll-cache/
+site/.jekyll-metadata
+
+# Bundler
+site/vendor/
+
+# Search cache contents (keep directory via .gitkeep, ignore extracted text)
+site/_search/cache/local/*.txt
+site/_search/cache/external/*.txt
+site/_search/cache/manifest.json
+
+# Pagefind output (generated at build time)
+site/_site/pagefind/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db

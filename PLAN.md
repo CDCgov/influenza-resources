@@ -1,0 +1,186 @@
+# PLAN.md — CDC Influenza Division Resource Site
+
+> Created: Session 1  
+> Last updated: Session 1
+
+---
+
+## 1. Directory Layout
+
+```
+influenza-resources/               # repo root (existing files untouched)
+├── .github/
+│   └── workflows/
+│       └── build-site.yml         # CI: ingest → build → index → deploy
+├── docs/
+│   └── laboratory/                # existing PDFs (preserved in place)
+├── scripts/
+│   ├── extract_local.py           # text extraction from local PDFs/DOCX/PPTX
+│   ├── fetch_external.py          # fetch + extract text from external URLs
+│   ├── requirements.txt           # pinned Python deps
+│   └── README.md                  # script usage docs
+├── site/
+│   ├── Gemfile
+│   ├── Gemfile.lock
+│   ├── _config.yml
+│   ├── _layouts/                  # vendored/customised Serif layouts
+│   ├── _includes/                 # vendored/customised Serif partials
+│   ├── _sass/                     # vendored/customised Serif SCSS
+│   ├── _resources/                # Jekyll collection — one .md per resource
+│   │   ├── laboratory/
+│   │   ├── zoonotic/
+│   │   ├── epidemiology/
+│   │   ├── training/
+│   │   └── software/
+│   ├── _data/
+│   │   └── schema.md              # content-model documentation
+│   ├── _search/
+│   │   └── cache/
+│   │       ├── local/             # extracted text from committed files
+│   │       ├── external/          # extracted text from external URLs
+│   │       └── .gitkeep
+│   ├── assets/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   ├── pages/
+│   │   ├── search.md              # Pagefind search UI
+│   │   ├── submit.md              # "Submit a resource" stub
+│   │   └── categories/            # category landing pages
+│   │       ├── laboratory.md
+│   │       ├── zoonotic.md
+│   │       ├── epidemiology.md
+│   │       ├── training.md
+│   │       └── software.md
+│   └── index.md                   # site home page
+├── init-prompt.md
+├── PLAN.md                        # ← this file
+├── STATUS.md
+├── README.md                      # NEVER modified
+├── LICENSE
+├── CONTRIBUTING.md
+├── DISCLAIMER.md
+├── code-of-conduct.md
+├── open_practices.md
+├── rules_of_behavior.md
+└── thanks.md
+```
+
+### Key layout decisions
+
+| Decision | Rationale |
+|---|---|
+| All site code under `site/` | Keeps Jekyll out of the repo root so the GitHub-rendered `README.md` is unaffected. |
+| `_resources/` Jekyll collection with subdirectories per category | One Markdown file per resource gives authoring flexibility, per-page front-matter, and clean URLs. Subdirectories keep the collection organised without affecting output. |
+| `docs/laboratory/` stays at repo root | Existing committed assets are preserved; ingestion scripts will reference them by relative path. |
+| `_search/cache/` under `site/` | Keeps extracted-text artefacts close to the Jekyll build; contents will be gitignored, directory committed with `.gitkeep`. |
+
+---
+
+## 2. Theme Integration — Vendored
+
+**Choice: Vendor the Jekyll Serif theme files into `site/`.**
+
+| Option | Pros | Cons | Verdict |
+|---|---|---|---|
+| `remote_theme` | Zero vendored code | Fragile across GitHub Pages updates; limited override capability; requires network at build time | ✗ |
+| Gem-based | Clean separation | Serif theme is not published on rubygems.org | ✗ |
+| **Vendored** | Full control; reproducible offline builds; easy customisation | Must manually pull upstream updates | **✓ Selected** |
+
+**Approach:** In Session 2 we will clone or download the Serif theme at a pinned commit, copy layouts, includes, SCSS, and sample assets into `site/`, and adapt `_config.yml`. The vendored commit SHA will be recorded here for traceability.
+
+---
+
+## 3. Search Engine — Pagefind (primary)
+
+**Choice: Pagefind (v1.x) as the client-side search engine.**
+
+| Criterion | Pagefind | Lunr.js |
+|---|---|---|
+| Index size | Compact; splits index into chunks loaded on demand | Entire index loaded up-front; grows linearly with corpus |
+| Build integration | Single post-build CLI step (`npx pagefind`) | Custom Node/Python script to produce JSON index |
+| UI | Built-in `<pagefind-ui>` component with sensible defaults | Must build custom search UI |
+| Offline / client-side | Yes | Yes |
+| Indexing non-HTML content | Via synthesised hidden HTML pages injected before indexing | Via custom JSON generation |
+| Binary dependency | npm package (cross-platform binary via `npx`) | Pure JS |
+
+**Rationale:** Pagefind's chunk-loaded index keeps initial JS payload small regardless of corpus size. The built-in UI accelerates delivery. The synthesised-page technique (generating hidden HTML wrappers for extracted text, annotated with `data-pagefind-body` and `data-pagefind-meta`) lets Pagefind index PDFs and external content without modifying the visible site.
+
+**Fallback:** If Pagefind proves unsuitable (e.g., binary availability in CI), Session 5 will implement a Lunr.js fallback with a `search-index.json` generated by a Python script.
+
+### How the full-corpus index works
+
+1. **Ingestion scripts** (Session 4) extract text from local PDFs/DOCX/PPTX and from external URLs, writing plain-text files to `site/_search/cache/{local,external}/`.
+2. **Pre-Pagefind build step** (Session 5) reads each cache file plus its corresponding resource's front-matter, generates a hidden HTML page per resource under `site/_site/_search_pages/<slug>.html` with:
+   - `data-pagefind-body` wrapping the extracted text
+   - `data-pagefind-meta` attributes for title, category, URL, summary
+3. **Pagefind** indexes the entire `_site/` directory, including these synthesised pages.
+4. The `/search/` page loads `pagefind-ui.js` and displays results linking back to resource pages or external URLs.
+
+---
+
+## 4. Accessory Scripts
+
+All scripts live in `scripts/` and are written in Python 3.10+.
+
+| Script | Purpose | Key deps |
+|---|---|---|
+| `extract_local.py` | Walk `docs/` and `site/assets/docs/` for PDFs, DOCX, PPTX; extract text; write to `site/_search/cache/local/<filename>.txt` | `pdfminer.six`, `python-docx`, `python-pptx` |
+| `fetch_external.py` | Read `site/_resources/**/*.md` front-matter; for each `source_url`, fetch HTML/PDF; extract text; write to `site/_search/cache/external/<url_hash>.txt`; maintain `cache/manifest.json` with ETag/Last-Modified/timestamp | `requests`, `beautifulsoup4`, `pdfminer.six`, `tldextract`, `pyyaml`, `robotexclusionrulesparser` |
+| `build_search_pages.py` | (Session 5) Generate synthesised hidden HTML from cache + front-matter for Pagefind indexing | `pyyaml`, `jinja2` |
+
+**Shared constraints for all scripts:**
+- Idempotent and safe to re-run.
+- Exit 0 on success; non-zero on fatal errors; warnings logged to stderr for partial failures (e.g., one URL unreachable).
+- `fetch_external.py` respects `robots.txt`, uses User-Agent `influenza-resources-indexer/1.0 (+https://github.com/CDCgov/influenza-resources)`, honours `--max-age` (default 7 days), and has a 30-second per-request timeout.
+
+---
+
+## 5. CI / CD Strategy
+
+**Platform:** GitHub Actions  
+**Trigger:** Push to `main`, manual `workflow_dispatch`  
+**Deployment target:** GitHub Pages (via `actions/deploy-pages`)
+
+### Workflow: `.github/workflows/build-site.yml`
+
+```
+jobs:
+  build-and-deploy:
+    steps:
+      - Checkout repo
+      - Setup Python 3.12 + cache pip
+      - Install Python deps (scripts/requirements.txt)
+      - Run extract_local.py
+      - Run fetch_external.py --max-age 1  (CI always refreshes)
+      - Setup Ruby 3.3 + cache bundle
+      - cd site && bundle install
+      - bundle exec jekyll build
+      - Run build_search_pages.py        (inject synthesised pages into _site)
+      - npx pagefind --site _site
+      - Upload _site as Pages artefact
+      - Deploy to Pages
+```
+
+A separate scheduled job (weekly cron) will run a link-checker against deployed URLs.
+
+---
+
+## 6. Dependency Pinning
+
+| Ecosystem | Lockfile / pin mechanism |
+|---|---|
+| Ruby | `site/Gemfile.lock` |
+| Python | `scripts/requirements.txt` with `==` pins |
+| Node / Pagefind | Invoked via `npx pagefind@1.x.x` with pinned version in workflow |
+
+---
+
+## 7. Open Questions / Deferred Decisions
+
+| # | Question | Deferred to |
+|---|---|---|
+| 1 | Exact Serif theme commit to vendor | Session 2 |
+| 2 | Pagefind version pin (latest stable at build time) | Session 5 |
+| 3 | Whether to copy `docs/laboratory/*.pdf` into `site/assets/docs/` or reference in place | Session 3 |
+| 4 | Lunr.js fallback implementation details (only if Pagefind blocked) | Session 5 |
