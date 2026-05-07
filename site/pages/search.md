@@ -23,7 +23,15 @@ permalink: /search/
       element: "#search",
       showSubResults: true,
       showImages: false,
-      processTerm: function (term) { return term; }
+      processResult: function (result) {
+        if (result.meta && result.meta.url) {
+          result.url = result.meta.url;
+        }
+        if (result.meta && result.meta.title) {
+          result.meta.title = result.meta.title.split(', category:')[0];
+        }
+        return result;
+      }
     });
   });
 </script>

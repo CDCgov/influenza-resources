@@ -45,9 +45,12 @@ _PAGE_TEMPLATE = """\
 <head><meta charset="utf-8"><title>{title}</title></head>
 <body>
 <div data-pagefind-body
-     data-pagefind-meta="title:{title_attr}, category:{category}, summary:{summary_attr}, url:{url}"
      data-pagefind-filter="category:{category}"
      style="display:none;">
+<h1 data-pagefind-meta="title">{title}</h1>
+<span data-pagefind-meta="url:{url}"></span>
+<span data-pagefind-meta="category:{category}"></span>
+<p data-pagefind-meta="summary">{summary}</p>
 {text}
 </div>
 </body>
@@ -109,9 +112,8 @@ def main() -> int:
 
         html = _PAGE_TEMPLATE.format(
             title=escape(title),
-            title_attr=escape(title),
             category=escape(category),
-            summary_attr=escape(summary[:200]),
+            summary=escape(summary[:200]),
             url=escape(url),
             text=escape(extracted_text),
         )
