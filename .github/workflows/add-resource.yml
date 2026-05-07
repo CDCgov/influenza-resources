@@ -32,5 +32,5 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --add-assignee "copilot"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
