@@ -39,7 +39,7 @@ defaults:
       layout: "page"
 
 # ── Category enumeration ─────────────────────
-categories:
+resource_categories:
   - laboratory
   - zoonotic
   - epidemiology

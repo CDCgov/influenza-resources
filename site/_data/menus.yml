@@ -1,7 +1,4 @@
-main:
-  - name: "Resources"
-    url: "/resources/"
-    weight: 1
+main: []
 
 footer:
   - name: "Home"
