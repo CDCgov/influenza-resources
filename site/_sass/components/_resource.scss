@@ -47,23 +47,25 @@
 .header-search {
   display: flex;
   align-items: center;
-  margin-left: auto;
+  justify-content: center;
+  width: 100%;
 }
 .header-search-input {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  width: 200px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 560px;
   outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
   &:focus {
     border-color: $primary;
-    box-shadow: 0 0 0 2px rgba($primary, 0.15);
+    box-shadow: 0 0 0 3px rgba($primary, 0.15);
   }
   @media (max-width: 767px) {
-    width: 140px;
-    font-size: 0.8rem;
-    padding: 5px 8px;
+    font-size: 0.95rem;
+    padding: 8px 14px;
   }
 }
 
