@@ -113,8 +113,26 @@ cd site && bundle install && bundle exec jekyll build
 - **No external URLs added** — all entries reference only local PDFs committed in `docs/laboratory/`
 - **Other categories** (zoonotic, epidemiology, training, software) remain empty — no docs exist for those yet
 
-## Session 4 — Ingestion Scripts
-**Status:** Not started
+## Session 4 — Ingestion Scripts ✅
+
+**Date:** 2026-05-07  
+**Status:** Complete
+
+### Delivered
+
+| File | Description |
+|---|---|
+| `scripts/extract_local.py` | Extracts text from local PDFs/DOCX/PPTX referenced in resource `local_path`; writes to `site/_search/cache/local/<slug>.txt`; incremental (skips if cache newer than source) |
+| `scripts/fetch_external.py` | Fetches external URLs from resource `source_url`; extracts HTML/PDF text; writes to `site/_search/cache/external/<hash>.txt`; respects robots.txt, conditional requests (ETag/Last-Modified), configurable `--max-age` |
+| `scripts/requirements.txt` | Pinned Python deps: beautifulsoup4, pdfminer.six, python-docx, python-pptx, PyYAML, requests |
+| `scripts/README.md` | Usage documentation for both scripts |
+
+### Test Results
+
+- `extract_local.py`: 13/13 PDFs extracted successfully (3,250–20,328 chars each)
+- `extract_local.py` re-run: 0 extracted, 13 skipped (incremental caching works)
+- `fetch_external.py`: runs cleanly with no external URLs (none in current resources)
+- Cache files properly gitignored
 
 ## Session 5 — Search Index & UI
 **Status:** Not started

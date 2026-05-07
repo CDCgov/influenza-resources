@@ -1,0 +1,6 @@
+beautifulsoup4==4.13.4
+pdfminer.six==20250506
+python-docx==1.1.2
+python-pptx==1.0.2
+PyYAML==6.0.2
+requests==2.32.3
