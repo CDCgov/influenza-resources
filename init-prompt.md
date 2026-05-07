@@ -78,7 +78,7 @@ Execute the following sessions **in order, one per conversation / context window
 **Deliverables:**
 - Final content model: either a `_resources` Jekyll collection (preferred) with one Markdown file per entry, or `_data/resources.yml` with rendered list pages — pick one in `PLAN.md` and implement it.
 - Category taxonomy implemented (tags or collections).
-- 2–3 real seed entries per category, sourced from cdc.gov/flu, each with: title, canonical URL, category/tags, summary, optional `pub_date`, optional `local_path` for committed files.
+- laboratory docs from `docs/laboratory/*.pdf` referenced in place, with corresponding resource entries created.
 - Category landing pages auto-generated from the collection/data.
 - A "Submit a resource" stub page describing how to contribute (link to `CONTRIBUTING.md`).
 **Exit criteria:** The built site shows populated categories with real CDC Influenza Division links and summaries.

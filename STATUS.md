@@ -83,8 +83,35 @@ cd site && bundle install && bundle exec jekyll build
 #   /resources/laboratory/miseq-library-loading/, /search/, /submit/
 ```
 
-## Session 3 — Content Model & Seed Entries
-**Status:** Not started
+## Session 3 — Content Model & Seed Entries ✅
+
+**Date:** 2026-05-07  
+**Status:** Complete
+
+### Delivered
+
+| File | Description |
+|---|---|
+| `site/_resources/laboratory/miseq-library-loading.md` | LP-309 Rev02D — MiSeq Library Loading Preparation |
+| `site/_resources/laboratory/automated-rna-extraction-qiacube.md` | LP-381 Rev0D — Automated RNA Extraction using QIAcube HT |
+| `site/_resources/laboratory/rt-pcr-sars-cov2-sgene.md` | LP-471 Rev03D — RT-PCR of SARS-CoV-2 S-gene |
+| `site/_resources/laboratory/mrt-pcr-influenza-a-rev01.md` | LP-497 Rev01D — MRT-PCR of Influenza A (superseded) |
+| `site/_resources/laboratory/mrt-pcr-influenza-a.md` | LP-497 Rev02D — MRT-PCR of Influenza A (current) |
+| `site/_resources/laboratory/nanopore-sequencing-infa-sarscov2-rev00.md` | LP-512 Rev00D — Nanopore Sequencing InfA/SARS-CoV-2 (superseded) |
+| `site/_resources/laboratory/nanopore-sequencing-infa-sarscov2.md` | LP-512 Rev01D — Nanopore Sequencing InfA/SARS-CoV-2 (current) |
+| `site/_resources/laboratory/m-rtpcr-influenza-a-b.md` | LP-513 Rev00D — M-RTPCR of Influenza A and B |
+| `site/_resources/laboratory/mrt-pcr-purification-exonuclease.md` | LP-514 Rev00D — MRT-PCR Purification using Exonuclease |
+| `site/_resources/laboratory/dna-quantification-qubit.md` | LP-516 Rev00D — DNA Quantification with Qubit |
+| `site/_resources/laboratory/miseq-ngs-run.md` | LP-517 Rev00D — Performing a MiSeq NGS Run |
+| `site/_resources/laboratory/illumina-dna-prep-manual.md` | LP-519 Rev00D — Manual Illumina DNA Prep Library |
+| `site/_resources/laboratory/qiaxcel-sample-prep-qc.md` | LP-520 Rev00D — QIAxcel Sample Prep and QC |
+
+### Notes
+
+- **13 resource entries** created, one per PDF in `docs/laboratory/`
+- **Superseded relationships:** LP-497 Rev01→Rev02, LP-512 Rev00→Rev01 linked via `supersedes` front-matter
+- **No external URLs added** — all entries reference only local PDFs committed in `docs/laboratory/`
+- **Other categories** (zoonotic, epidemiology, training, software) remain empty — no docs exist for those yet
 
 ## Session 4 — Ingestion Scripts
 **Status:** Not started
