@@ -8,5 +8,6 @@ footer:
     url: "/resources/"
     weight: 2
   - name: "Submit a Resource"
-    url: "/submit/"
+    url: "https://github.com/CDCgov/influenza-resources/issues/new?template=add-resource.yml"
     weight: 3
+    external: true
