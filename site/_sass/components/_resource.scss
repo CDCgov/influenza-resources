@@ -42,3 +42,70 @@
     background-color: darken($steel, 10%);
   }
 }
+
+// Header search box
+.header-search {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.header-search-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  width: 200px;
+  outline: none;
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba($primary, 0.15);
+  }
+  @media (max-width: 767px) {
+    width: 140px;
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+}
+
+// Category pills
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 2px solid $primary;
+  border-radius: 30px;
+  color: $primary-dark;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+  &:hover {
+    background-color: $primary;
+    color: $white;
+    text-decoration: none;
+    .category-pill-count {
+      background-color: $white;
+      color: $primary;
+    }
+  }
+}
+.category-pill-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: $primary;
+  color: $white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0 6px;
+  transition: background-color 0.15s, color 0.15s;
+}

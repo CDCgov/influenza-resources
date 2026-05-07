@@ -2,24 +2,6 @@ main:
   - name: "Resources"
     url: "/resources/"
     weight: 1
-  - name: "Laboratory"
-    url: "/categories/laboratory/"
-    weight: 2
-  - name: "Zoonotic"
-    url: "/categories/zoonotic/"
-    weight: 3
-  - name: "Epidemiology"
-    url: "/categories/epidemiology/"
-    weight: 4
-  - name: "Training"
-    url: "/categories/training/"
-    weight: 5
-  - name: "Software"
-    url: "/categories/software/"
-    weight: 6
-  - name: "Search"
-    url: "/search/"
-    weight: 7
 
 footer:
   - name: "Home"

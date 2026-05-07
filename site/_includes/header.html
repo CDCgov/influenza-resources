@@ -7,6 +7,9 @@
       <a href="{{ site.baseurl }}"><img width="{{ site.logo.mobile_width }}" height="{{ site.logo.mobile_height }}" alt="{{ site.title }}" src="{{ site.logo.mobile | relative_url }}" /></a>
     </div>
     {% include main-menu.html %}
+    <form class="header-search" action="{{ '/search/' | relative_url }}" method="get" role="search">
+      <input type="search" name="q" placeholder="Search resources…" aria-label="Search resources" class="header-search-input" />
+    </form>
     {% include hamburger.html %}
   </div>
 </div>

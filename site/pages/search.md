@@ -19,7 +19,7 @@ permalink: /search/
 <script src="/pagefind/pagefind-ui.js"></script>
 <script>
   window.addEventListener('DOMContentLoaded', function () {
-    new PagefindUI({
+    var pf = new PagefindUI({
       element: "#search",
       showSubResults: true,
       showImages: false,
@@ -33,5 +33,11 @@ permalink: /search/
         return result;
       }
     });
+    // Pre-fill from ?q= query param (from header search box)
+    var params = new URLSearchParams(window.location.search);
+    var q = params.get('q');
+    if (q) {
+      pf.triggerSearch(q);
+    }
   });
 </script>
