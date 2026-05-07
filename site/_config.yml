@@ -49,6 +49,7 @@ categories:
 # ── Sass ─────────────────────────────────────
 sass:
   style: compressed
+  quiet_deps: true
 
 # ── Plugins ──────────────────────────────────
 plugins:
