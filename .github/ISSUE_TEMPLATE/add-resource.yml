@@ -29,9 +29,18 @@ body:
         - epidemiology
         - training
         - software
-        - ""
+        - other
     validations:
       required: true
+
+  - type: input
+    id: category_other
+    attributes:
+      label: If other, please specify
+      description: Provide a custom category if "other" was selected above
+      placeholder: Enter category
+    validations:
+      required: false
 
   - type: textarea
     id: summary
