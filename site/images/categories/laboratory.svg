@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#e5261f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="8" width="40" height="48" rx="3"/><path d="M20 20h24M20 28h24M20 36h16"/><circle cx="44" cy="44" r="8" fill="#fff" stroke="#e5261f"/><path d="M44 40v8M40 44h8"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Laboratory pencil-style icon">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="13" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6"/></filter>
+    <style><![CDATA[
+      .line{fill:none;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:url(#rough)}
+      .thin{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.75;filter:url(#rough)}
+      .shade{fill:none;stroke:#111;stroke-width:1.4;stroke-linecap:round;opacity:.35;filter:url(#rough)}
+    ]]></style>
+  </defs>
+  <path class="line" d="M201 89h110M222 89v119L143 367c-15 30 7 66 41 66h144c35 0 56-37 41-68l-79-157V89"/>
+  <path class="line" d="M197 295c25 12 50 10 76-3 26-13 52-14 78-1"/>
+  <path class="thin" d="M178 334c35 19 70 17 105 0 23-11 44-13 67-5"/>
+  <circle class="thin" cx="222" cy="351" r="11"/>
+  <circle class="thin" cx="283" cy="373" r="8"/>
+  <circle class="thin" cx="311" cy="328" r="7"/>
+  <path class="thin" d="M229 121h52M229 152h52M229 183h52"/>
+  <path class="shade" d="M210 229l-58 125M302 229l58 126M190 406c43 14 88 15 134 0"/>
+  <path class="shade" d="M195 309c14-5 31-6 48-1M269 306c25-13 49-16 72-5M216 94c5 42 5 80 0 116"/>
+</svg>
