@@ -134,8 +134,37 @@ cd site && bundle install && bundle exec jekyll build
 - `fetch_external.py`: runs cleanly with no external URLs (none in current resources)
 - Cache files properly gitignored
 
-## Session 5 — Search Index & UI
-**Status:** Not started
+## Session 5 — Search Index & UI ✅
+
+**Date:** 2026-05-07  
+**Status:** Complete
+
+### Delivered
+
+| File | Description |
+|---|---|
+| `scripts/build_search_pages.py` | Generates synthesised hidden HTML pages from cache + front-matter into `_site/_search_pages/` for Pagefind indexing |
+| `site/pages/search.md` | `/search/` page with Pagefind UI (input, results, category filter) |
+| `site/_layouts/resource.html` | Updated with `data-pagefind-body`, `data-pagefind-meta`, `data-pagefind-filter` attributes |
+
+### Search Engine
+
+- **Pagefind 1.5.2** — client-side, chunk-loaded index
+- 26 pages indexed (13 visible resource pages + 13 synthesised full-text pages)
+- 2,596 words indexed, 1 filter (category)
+- Built-in `pagefind-ui.js` for search UI
+
+### Pipeline
+
+```bash
+cd site && bundle exec jekyll build                    # 1. Jekyll build
+cd .. && python scripts/build_search_pages.py          # 2. Inject synthesised pages
+npx pagefind@1.5.2 --site site/_site                   # 3. Pagefind index
+```
+
+### Also Fixed
+
+- All three scripts (`extract_local.py`, `fetch_external.py`, `build_search_pages.py`) now use PyYAML for front-matter parsing (fixes multi-line `summary` fields using YAML block scalars)
 
 ## Session 6 — CI/CD, Docs, Polish
 **Status:** Not started

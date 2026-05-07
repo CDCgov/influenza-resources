@@ -127,7 +127,7 @@ All scripts live in `scripts/` and are written in Python 3.10+.
 |---|---|---|
 | `extract_local.py` | Walk `docs/` and `site/assets/docs/` for PDFs, DOCX, PPTX; extract text; write to `site/_search/cache/local/<filename>.txt` | `pdfminer.six`, `python-docx`, `python-pptx` |
 | `fetch_external.py` | Read `site/_resources/**/*.md` front-matter; for each `source_url`, fetch HTML/PDF; extract text; write to `site/_search/cache/external/<url_hash>.txt`; maintain `cache/manifest.json` with ETag/Last-Modified/timestamp | `requests`, `beautifulsoup4`, `pdfminer.six`, `tldextract`, `pyyaml`, `robotexclusionrulesparser` |
-| `build_search_pages.py` | (Session 5) Generate synthesised hidden HTML from cache + front-matter for Pagefind indexing | `pyyaml`, `jinja2` |
+| `build_search_pages.py` | Generate synthesised hidden HTML from cache + front-matter for Pagefind indexing | `pyyaml` (stdlib `html.escape` for templating) |
 
 **Shared constraints for all scripts:**
 - Idempotent and safe to re-run.
@@ -172,7 +172,7 @@ A separate scheduled job (weekly cron) will run a link-checker against deployed 
 |---|---|
 | Ruby | `site/Gemfile.lock` |
 | Python | `scripts/requirements.txt` with `==` pins |
-| Node / Pagefind | Invoked via `npx pagefind@1.x.x` with pinned version in workflow |
+| Node / Pagefind | Invoked via `npx pagefind@1.5.2` with pinned version in workflow |
 
 ---
 
@@ -181,6 +181,6 @@ A separate scheduled job (weekly cron) will run a link-checker against deployed 
 | # | Question | Deferred to |
 |---|---|---|
 | 1 | ~~Exact Serif theme commit to vendor~~ — Resolved: `a323305ac59c537850ad35334df7a10124d4ca80` (v1.4) | Session 2 ✅ |
-| 2 | Pagefind version pin (latest stable at build time) | Session 5 |
+| 2 | ~~Pagefind version pin~~ — Resolved: `1.5.2` | Session 5 ✅ |
 | 3 | Whether to copy `docs/laboratory/*.pdf` into `site/assets/docs/` or reference in place | Session 3 |
 | 4 | Lunr.js fallback implementation details (only if Pagefind blocked) | Session 5 |

@@ -31,6 +31,7 @@ from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
 
 import requests
+import yaml
 from bs4 import BeautifulSoup
 
 USER_AGENT = "influenza-resources-indexer/1.0 (+https://github.com/CDCgov/influenza-resources)"
@@ -47,14 +48,7 @@ def _parse_front_matter(text: str) -> dict:
     m = _FM_RE.match(text)
     if not m:
         return {}
-    result = {}
-    for line in m.group(1).splitlines():
-        if ":" in line and not line.startswith(" ") and not line.startswith("-"):
-            key, _, val = line.partition(":")
-            val = val.strip().strip('"').strip("'")
-            if val:
-                result[key.strip()] = val
-    return result
+    return yaml.safe_load(m.group(1)) or {}
 
 
 # ---------------------------------------------------------------------------

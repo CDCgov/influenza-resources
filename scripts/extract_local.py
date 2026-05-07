@@ -17,6 +17,8 @@ import re
 import sys
 from pathlib import Path
 
+import yaml
+
 # ---------------------------------------------------------------------------
 # Lazy imports for extraction libraries – fail gracefully with clear message
 # ---------------------------------------------------------------------------
@@ -57,18 +59,11 @@ _FM_RE = re.compile(r"^---\s*\n(.*?\n)---\s*\n", re.DOTALL)
 
 
 def _parse_front_matter(text: str) -> dict:
-    """Return a dict of simple scalar front-matter values."""
+    """Return a dict of front-matter values."""
     m = _FM_RE.match(text)
     if not m:
         return {}
-    result = {}
-    for line in m.group(1).splitlines():
-        if ":" in line and not line.startswith(" ") and not line.startswith("-"):
-            key, _, val = line.partition(":")
-            val = val.strip().strip('"').strip("'")
-            if val:
-                result[key.strip()] = val
-    return result
+    return yaml.safe_load(m.group(1)) or {}
 
 
 # ---------------------------------------------------------------------------

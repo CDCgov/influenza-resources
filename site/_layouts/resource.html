@@ -3,10 +3,12 @@ layout: default
 bodyClass: "page-resource"
 ---
 
-<div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+<div class="container pb-6 pt-6 pt-md-10 pb-md-10" data-pagefind-body>
   <div class="row justify-content-start">
     <div class="col-12 col-md-8">
-      <div class="service service-single">
+      <div class="service service-single"
+           data-pagefind-meta="title:{{ page.title | escape }}, category:{{ page.category }}, summary:{{ page.summary | escape | truncate: 200 }}"
+           data-pagefind-filter="category:{{ page.category }}">
         <h1 class="title">{{ page.title }}</h1>
 
         <div class="resource-meta mb-4">
