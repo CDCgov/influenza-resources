@@ -1,0 +1,57 @@
+---
+layout: default
+bodyClass: "page-resource"
+---
+
+<div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="service service-single">
+        <h1 class="title">{{ page.title }}</h1>
+
+        <div class="resource-meta mb-4">
+          {% if page.category %}
+          <span class="badge badge-category">
+            <a href="{{ '/categories/' | append: page.category | append: '/' | relative_url }}">{{ page.category | capitalize }}</a>
+          </span>
+          {% endif %}
+          {% if page.pub_date %}
+          <span class="resource-date">{{ page.pub_date | date: "%B %d, %Y" }}</span>
+          {% endif %}
+          {% if page.revision %}
+          <span class="resource-revision">{{ page.revision }}</span>
+          {% endif %}
+        </div>
+
+        {% if page.summary %}
+        <div class="resource-summary mb-4">
+          <p>{{ page.summary }}</p>
+        </div>
+        {% endif %}
+
+        <div class="resource-links mb-4">
+          {% if page.source_url %}
+          <a href="{{ page.source_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">View on CDC.gov &rarr;</a>
+          {% endif %}
+          {% if page.local_path %}
+          <a href="{{ '/' | append: page.local_path | relative_url }}" class="button button-secondary" target="_blank" rel="noopener noreferrer">Download PDF</a>
+          {% endif %}
+        </div>
+
+        {% if content != "" %}
+        <div class="content">{{ content }}</div>
+        {% endif %}
+
+        {% if page.tags.size > 0 %}
+        <div class="resource-tags mt-4">
+          <strong>Tags:</strong>
+          {% for tag in page.tags %}
+          <span class="badge badge-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>

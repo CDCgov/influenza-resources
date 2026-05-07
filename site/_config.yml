@@ -1,0 +1,67 @@
+# ──────────────────────────────────────────────
+# CDC Influenza Division Resource Site
+# Vendored from Jekyll Serif Theme v1.4
+# (commit a323305ac59c537850ad35334df7a10124d4ca80)
+# ──────────────────────────────────────────────
+
+baseurl: "/"
+permalink: pretty
+title: "CDC Influenza Division Resources"
+description: "A curated index of CDC-cleared documents and links from the CDC Influenza Division."
+
+logo:
+  mobile: "images/logo/logo-mobile.svg"
+  mobile_height: "32px"
+  mobile_width: "32px"
+  desktop: "images/logo/logo.svg"
+  desktop_height: "32px"
+  desktop_width: "120px"
+
+home:
+  limit_resources: 6
+
+# ── Collections ──────────────────────────────
+collections:
+  resources:
+    output: true
+    sort_by: title
+    permalink: /resources/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "resources"
+    values:
+      layout: "resource"
+  - scope:
+      path: "pages"
+    values:
+      layout: "page"
+
+# ── Category enumeration ─────────────────────
+categories:
+  - laboratory
+  - zoonotic
+  - epidemiology
+  - training
+  - software
+
+# ── Sass ─────────────────────────────────────
+sass:
+  style: compressed
+
+# ── Plugins ──────────────────────────────────
+plugins:
+  - jekyll-environment-variables
+
+# ── Exclude from build ───────────────────────
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - _search/

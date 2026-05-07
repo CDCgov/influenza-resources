@@ -1,0 +1,42 @@
+---
+layout: default
+bodyClass: "page-category"
+---
+
+<div class="intro">
+  <div class="container">
+    <div class="row justify-content-start">
+      <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
+        <h1>{{ page.title }}</h1>
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container pt-6 pb-6">
+  <div class="row">
+    {% assign category_resources = site.resources | where: "category", page.category_slug %}
+    {% for resource in category_resources %}
+    <div class="col-12 col-md-6 mb-3">
+      <div class="service service-summary">
+        <div class="service-content">
+          <h2 class="service-title">
+            <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
+          </h2>
+          <p>{{ resource.summary | truncate: 160 }}</p>
+          {% if resource.pub_date %}
+          <span class="resource-date">{{ resource.pub_date | date: "%B %d, %Y" }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if category_resources.size == 0 %}
+    <div class="col-12">
+      <p>No resources in this category yet. <a href="{{ '/submit/' | relative_url }}">Submit one!</a></p>
+    </div>
+    {% endif %}
+  </div>
+</div>

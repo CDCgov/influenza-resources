@@ -1,0 +1,32 @@
+---
+layout: default
+bodyClass: "page-resources"
+---
+
+<div class="intro">
+  <div class="container">
+    <div class="row justify-content-start">
+      <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container pt-6 pb-6">
+  <div class="row">
+    {% for resource in site.resources %}
+    <div class="col-12 col-md-6 mb-3">
+      <div class="service service-summary">
+        <div class="service-content">
+          <h2 class="service-title">
+            <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
+          </h2>
+          <p>{{ resource.summary | truncate: 160 }}</p>
+          <span class="badge badge-category">{{ resource.category | capitalize }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

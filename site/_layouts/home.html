@@ -1,0 +1,62 @@
+---
+layout: default
+bodyClass: "page-home"
+---
+
+<div class="intro">
+  <div class="container">
+    <div class="row justify-content-start">
+      <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="container pt-6 pb-6 pb-md-10">
+    <h2 class="mb-4">Browse by Category</h2>
+    <div class="row justify-content-start">
+      {% for cat in site.categories %}
+      <div class="col-12 col-md-4 mb-1">
+        <div class="service service-summary">
+          <div class="service-content">
+            <h3 class="service-title">
+              <a href="{{ '/categories/' | append: cat | append: '/' | relative_url }}">{{ cat | capitalize }}</a>
+            </h3>
+            {% assign cat_count = site.resources | where: "category", cat | size %}
+            <p>{{ cat_count }} resource{% if cat_count != 1 %}s{% endif %}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="strip strip-grey">
+  <div class="container pt-6 pb-6 pt-md-10 pb-md-10">
+    <h2 class="mb-4">Recent Resources</h2>
+    <div class="row justify-content-start">
+      {% assign limit = site.home.limit_resources | default: 6 %}
+      {% for resource in site.resources limit: limit %}
+      <div class="col-12 col-md-6 mb-3">
+        <div class="service service-summary">
+          <div class="service-content">
+            <h3 class="service-title">
+              <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
+            </h3>
+            <p>{{ resource.summary | truncate: 120 }}</p>
+            <span class="badge badge-category">{{ resource.category | capitalize }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <a class="button button-primary" href="{{ '/resources/' | relative_url }}">View All Resources</a>
+      </div>
+    </div>
+  </div>
+</div>

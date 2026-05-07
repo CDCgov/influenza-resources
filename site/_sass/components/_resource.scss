@@ -1,0 +1,44 @@
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.badge-category {
+  background-color: lighten($primary, 45%);
+  color: $primary-dark;
+  a {
+    color: $primary-dark;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.badge-tag {
+  background-color: lighten($steel, 50%);
+  color: $black;
+  margin-right: 4px;
+}
+.resource-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  color: $steel;
+  font-size: 0.9rem;
+}
+.resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.button-secondary {
+  background-color: $steel;
+  color: $white;
+  &:hover {
+    background-color: darken($steel, 10%);
+  }
+}

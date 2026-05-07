@@ -180,7 +180,7 @@ A separate scheduled job (weekly cron) will run a link-checker against deployed 
 
 | # | Question | Deferred to |
 |---|---|---|
-| 1 | Exact Serif theme commit to vendor | Session 2 |
+| 1 | ~~Exact Serif theme commit to vendor~~ — Resolved: `a323305ac59c537850ad35334df7a10124d4ca80` (v1.4) | Session 2 ✅ |
 | 2 | Pagefind version pin (latest stable at build time) | Session 5 |
 | 3 | Whether to copy `docs/laboratory/*.pdf` into `site/assets/docs/` or reference in place | Session 3 |
 | 4 | Lunr.js fallback implementation details (only if Pagefind blocked) | Session 5 |
