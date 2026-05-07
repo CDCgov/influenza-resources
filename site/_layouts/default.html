@@ -27,10 +27,13 @@
 </head>
 
 <body class='page {{layout.bodyClass}}'>
+  <a href="#main-content" class="sr-only sr-only-focusable">Skip to main content</a>
   {% include main-menu-mobile.html %}
   <div id="wrapper" class="wrapper">
     {% include header.html headerClass='header-extra' %}
-    {{content}}
+    <main id="main-content">
+      {{content}}
+    </main>
   </div>
   {% include footer.html %}
   {% include sub-footer.html %}

@@ -1,0 +1,50 @@
+name: Check Links
+
+on:
+  schedule:
+    - cron: "30 6 * * 1"  # Every Monday at 06:30 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: site
+
+      - name: Build Jekyll site
+        working-directory: site
+        run: bundle exec jekyll build
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,204,301,302,403
+            --exclude-mail
+            --timeout 30
+            --max-retries 3
+            site/_site
+          fail: false
+          output: lychee-report.md
+
+      - name: Create issue on broken links
+        if: env.lychee_exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Link check: broken links found"
+          content-filepath: lychee-report.md
+          labels: link-check

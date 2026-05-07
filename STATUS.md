@@ -166,5 +166,36 @@ npx pagefind@1.5.2 --site site/_site                   # 3. Pagefind index
 
 - All three scripts (`extract_local.py`, `fetch_external.py`, `build_search_pages.py`) now use PyYAML for front-matter parsing (fixes multi-line `summary` fields using YAML block scalars)
 
-## Session 6 — CI/CD, Docs, Polish
-**Status:** Not started
+## Session 6 — CI/CD, Docs, Polish ✅
+
+**Date:** 2026-05-07  
+**Status:** Complete
+
+### Delivered
+
+| File | Description |
+|---|---|
+| `.github/workflows/build-site.yml` | CI/CD: Ruby + Python + Node setup → extract text → Jekyll build → Pagefind → deploy to GitHub Pages (on push to `main`) |
+| `.github/workflows/check-links.yml` | Scheduled weekly link checker (lychee) — creates issue on broken links |
+| `.github/workflows/add-resource.yml` | Issue-to-PR automation: "Add Resource" issue form auto-generates resource file + PR |
+| `.github/ISSUE_TEMPLATE/add-resource.yml` | GitHub issue form template for submitting new resources |
+| `site/README.md` | Developer guide: prerequisites, quick start, build pipeline, how to add resources, directory structure, search docs, CI/CD overview |
+
+### Accessibility Fixes
+
+- Added skip-to-content link (`<a href="#main-content">Skip to main content</a>`) visible on keyboard focus
+- Replaced `<div class="header">` with `<header>` semantic element with `role="banner"`
+- Replaced `<div class="footer">` with `<footer>` semantic element with `role="contentinfo"`
+- Added `<main id="main-content">` landmark wrapping page content
+- Added `aria-hidden="true"` to decorative SVG icon in header
+- `lang="en"` already present on `<html>` element
+- All form inputs have `aria-label` attributes
+- All images have `alt` text
+
+### UI Polish (pre-Session 6)
+
+- Replaced category pills with large image card boxes with placeholder SVG icons
+- Removed Jekyll Serif logo; centered and enlarged header search box
+- Added home icon (house SVG) to left of search bar
+- Added flu virion pencil drawing as hero image on homepage
+- Updated category SVGs and enlarged card image area
