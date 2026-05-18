@@ -31,9 +31,15 @@ def _parse_front_matter(text: str) -> dict:
     return yaml.safe_load(m.group(1)) or {}
 
 
-def _slug_to_url(slug: str, category: str, baseurl: str = "") -> str:
+def _slug_to_url(rel_path: str, baseurl: str = "") -> str:
+    """Build a resource URL from the file's path relative to _resources/.
+
+    Jekyll's `permalink: /resources/:path/` uses the file's collection-relative
+    path (without extension), so we mirror that here.
+    """
     prefix = baseurl.rstrip("/")
-    return f"{prefix}/resources/{category}/{slug}/"
+    # rel_path is e.g. "laboratory/illumina-dna-prep-manual" (no .md)
+    return f"{prefix}/resources/{rel_path}/"
 
 
 # ---------------------------------------------------------------------------
@@ -82,13 +88,20 @@ def main() -> int:
     for md_file in sorted(resources_dir.rglob("*.md")):
         fm = _parse_front_matter(md_file.read_text(encoding="utf-8"))
         title = fm.get("title", md_file.stem)
-        category = fm.get("category", "uncategorized")
         summary = fm.get("summary", "")
         slug = md_file.stem
 
-        # Determine the URL for this resource
+        # Derive category: prefer plural 'categories' list, fall back to singular
+        categories = fm.get("categories", [])
+        if categories and isinstance(categories, list):
+            category = categories[0]
+        else:
+            category = fm.get("category", "uncategorized")
+
+        # Derive URL from file path relative to _resources/ (mirrors Jekyll :path permalink)
+        rel_path = md_file.relative_to(resources_dir).with_suffix("")
         source_url = fm.get("source_url", "")
-        url = source_url if source_url else _slug_to_url(slug, category, baseurl)
+        url = source_url if source_url else _slug_to_url(str(rel_path), baseurl)
 
         # Try to find cached extracted text
         extracted_text = ""
