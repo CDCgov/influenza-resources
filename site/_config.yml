@@ -45,6 +45,7 @@ resource_categories:
   - epidemiology
   - training
   - software
+  - datasets
 
 # ── Sass ─────────────────────────────────────
 sass:

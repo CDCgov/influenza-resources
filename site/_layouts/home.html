@@ -48,7 +48,8 @@ bodyClass: "page-home"
     <h2 class="mb-4">Recent Resources</h2>
     <div class="row justify-content-start">
       {% assign limit = site.home.limit_resources | default: 6 %}
-      {% for resource in site.resources limit: limit %}
+      {% assign recent_resources = site.resources | sort: "pub_date" | reverse %}
+      {% for resource in recent_resources limit: limit %}
       <div class="col-12 col-md-6 mb-3">
         <div class="service service-summary">
           <div class="service-content">
