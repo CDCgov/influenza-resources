@@ -23,6 +23,9 @@ bodyClass: "page-home"
       {% for cat in site.resource_categories %}
       {% assign cat_count = 0 %}
       {% for resource in site.resources %}
+        {% if resource.archived %}
+          {% continue %}
+        {% endif %}
         {% if resource.categories and resource.categories contains cat %}
           {% assign cat_count = cat_count | plus: 1 %}
         {% elsif resource.category == cat %}
@@ -48,7 +51,7 @@ bodyClass: "page-home"
     <h2 class="mb-4">Recent Resources</h2>
     <div class="row justify-content-start">
       {% assign limit = site.home.limit_resources | default: 6 %}
-      {% assign recent_resources = site.resources | sort: "pub_date" | reverse %}
+      {% assign recent_resources = site.resources | where_exp: "item", "item.archived != true" | sort: "pub_date" | reverse %}
       {% for resource in recent_resources limit: limit %}
       <div class="col-12 col-md-6 mb-3">
         <div class="service service-summary">

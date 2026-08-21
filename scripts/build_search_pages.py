@@ -87,6 +87,12 @@ def main() -> int:
 
     for md_file in sorted(resources_dir.rglob("*.md")):
         fm = _parse_front_matter(md_file.read_text(encoding="utf-8"))
+
+        # Skip archived (superseded) revisions — they must not appear in search.
+        if fm.get("archived"):
+            print(f"  skipped (archived): {md_file.stem}")
+            continue
+
         title = fm.get("title", md_file.stem)
         summary = fm.get("summary", "")
         slug = md_file.stem

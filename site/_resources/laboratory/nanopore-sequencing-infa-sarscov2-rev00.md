@@ -16,4 +16,6 @@ authors:
   - "CDC Influenza Division"
 revision: "Rev00D"
 supersedes: ""
+superseded_by: "nanopore-sequencing-infa-sarscov2"
+archived: true
 ---

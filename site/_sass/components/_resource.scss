@@ -65,6 +65,33 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
+// Archived / superseded document banner
+.resource-archived-banner {
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  border: 1px solid #f0c36d;
+  border-left: 4px solid #d9a520;
+  border-radius: 4px;
+  background-color: #fdf6e3;
+  color: #6b5900;
+  font-size: 0.95rem;
+  a {
+    color: $primary-dark;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Archived badge (Archive listing page)
+.badge-archived {
+  background-color: #f0c36d;
+  color: #6b5900;
+}
 .button-secondary {
   background-color: $steel;
   color: $white;

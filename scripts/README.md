@@ -39,6 +39,30 @@ python scripts/fetch_external.py --max-age 1  # re-fetch if older than 1 day
 python scripts/fetch_external.py --force      # ignore cache, re-fetch all
 ```
 
+### `detect_versions.py`
+
+Scans `site/_resources/` for protocols that exist in multiple versions, then
+interactively asks which revision is current. The current version is left
+visible; older revisions are marked in front-matter with `archived: true` and
+`superseded_by: "<current-slug>"`.
+
+Archived documents are excluded from the All Resources page, category pages,
+the home page, and search, and are listed on the `/archive/` page with a link
+to the current version.
+
+Documents are grouped into a version family when any of these match: an
+explicit `supersedes:` chain, slugs that are identical after stripping a
+trailing `-rev<NN>` suffix, or titles that are identical after stripping a
+trailing `(Rev<NN>D)` suffix.
+
+```bash
+python scripts/detect_versions.py            # interactive selection
+python scripts/detect_versions.py --dry-run  # show the plan, write nothing
+python scripts/detect_versions.py --yes      # non-interactive; pick highest revision
+```
+
+Re-run this whenever a new revision of a protocol is added.
+
 ## Output
 
 Extracted text files are written to `site/_search/cache/` and are gitignored.

@@ -16,6 +16,7 @@ bodyClass: "page-resources"
 <div class="container pt-6 pb-6">
   <div class="row">
     {% for resource in site.resources %}
+    {% unless resource.archived %}
     <div class="col-12 col-md-6 mb-3">
       <div class="service service-summary">
         <div class="service-content">
@@ -33,6 +34,7 @@ bodyClass: "page-resources"
         </div>
       </div>
     </div>
+    {% endunless %}
     {% endfor %}
   </div>
 </div>

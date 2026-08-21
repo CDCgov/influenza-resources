@@ -17,6 +17,9 @@ bodyClass: "page-category"
 <div class="container pt-6 pb-6">
   {% assign category_resources = "" | split: "" %}
   {% for resource in site.resources %}
+    {% if resource.archived %}
+      {% continue %}
+    {% endif %}
     {% if resource.categories and resource.categories contains page.category_slug %}
       {% assign category_resources = category_resources | push: resource %}
     {% elsif resource.category == page.category_slug %}

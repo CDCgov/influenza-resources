@@ -15,4 +15,6 @@ authors:
   - "CDC Influenza Division"
 revision: "Rev01D"
 supersedes: ""
+superseded_by: "mrt-pcr-influenza-a"
+archived: true
 ---

@@ -7,7 +7,10 @@ footer:
   - name: "Resources"
     url: "/resources/"
     weight: 2
+  - name: "Archive"
+    url: "/archive/"
+    weight: 3
   - name: "Submit a Resource"
     url: "https://github.com/CDCgov/influenza-resources/issues/new?template=add-resource.yml"
-    weight: 3
+    weight: 4
     external: true

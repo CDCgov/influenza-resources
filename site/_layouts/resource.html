@@ -3,9 +3,26 @@ layout: default
 bodyClass: "page-resource"
 ---
 
-<div class="container pb-6 pt-6 pt-md-10 pb-md-10" data-pagefind-body>
+<div class="container pb-6 pt-6 pt-md-10 pb-md-10"{% unless page.archived %} data-pagefind-body{% else %} data-pagefind-ignore{% endunless %}>
   <div class="row justify-content-start">
     <div class="col-12 col-md-8">
+      {% if page.archived %}
+      {% assign current_version = nil %}
+      {% for r in site.resources %}
+        {% assign r_slug = r.path | split: "/" | last | remove: ".md" %}
+        {% if r_slug == page.superseded_by %}
+          {% assign current_version = r %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      <div class="resource-archived-banner" role="alert">
+        <strong>Archived document.</strong>
+        This revision has been superseded and is kept for reference only.
+        {% if current_version %}
+        <a href="{{ current_version.url | relative_url }}">View the current version &rarr;</a>
+        {% endif %}
+      </div>
+      {% endif %}
       <div class="service service-single"
            data-pagefind-meta="title:{{ page.title | escape }}, category:{% if page.categories %}{{ page.categories | join: ',' }}{% else %}{{ page.category }}{% endif %}, summary:{{ page.summary | escape | truncate: 200 }}"
            data-pagefind-filter="category:{% if page.categories %}{{ page.categories | join: ',' }}{% else %}{{ page.category }}{% endif %}">
