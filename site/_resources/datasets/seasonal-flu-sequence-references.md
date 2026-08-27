@@ -6,7 +6,7 @@ summary: >-
   Curated GISAID EPI_SET genetic sequence references for seasonal influenza
   (H3N2, H1N1pdm09, B Victoria), including Complete and Contemporary per-segment
   datasets plus ferret antisera reagent references.
-pub_date: 2026-07-13
+pub_date: 2026-08-27
 tags:
   - genetic-references
   - sequences
@@ -105,12 +105,14 @@ Reagent references are samples representing current CDC ferret antisera used in 
 
 | Subtype    | EPI_SET          | DOI                                                                              | Sample Number |
 | :--------- | :--------------- | :------------------------------------------------------------------------------- | :------ |
-| H3N2       | EPI_SET_260714ep | [https://doi.org/10.55876/gis8.260714ep](https://doi.org/10.55876/gis8.260714ep) | 144     |
-| H1N1pdm09  | EPI_SET_260714xo | [https://doi.org/10.55876/gis8.260714xo](https://doi.org/10.55876/gis8.260714xo) | 107     |
-| B Victoria | EPI_SET_260714as | [https://doi.org/10.55876/gis8.260714as](https://doi.org/10.55876/gis8.260714as) | 111     |
+| H3N2       | EPI_SET_260827fs | [https://doi.org/10.55876/gis8.260827fs](https://doi.org/10.55876/gis8.260827fs) | 62      |
+| H1N1pdm09  | EPI_SET_260827mr | [https://doi.org/10.55876/gis8.260827mr](https://doi.org/10.55876/gis8.260827mr) | 46      |
+| B Victoria | EPI_SET_260827zv | [https://doi.org/10.55876/gis8.260827zv](https://doi.org/10.55876/gis8.260827zv) | 33      |
 
 ## Notes on Datasets
 
 - Datasets will be updated quarterly
-- These current datasets were generated on **2026-07-13**
+- The [Complete](#complete) dataset was generated on **2026-07-13**
+- The [Contemporary](#contemporary) dataset was generated on **2026-07-13**
+- The [Reagent References](#reagent-references) dataset was generated on **2026-08-27**
 
