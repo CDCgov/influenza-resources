@@ -17,6 +17,9 @@ python scripts/extract_local.py
 echo "==> Fetching external URLs..."
 python scripts/fetch_external.py
 
+echo "==> Generating recent resources list..."
+python scripts/build_recent.py
+
 echo "==> Building Jekyll site..."
 cd site
 bundle exec jekyll build

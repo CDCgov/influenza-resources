@@ -51,6 +51,29 @@ bodyClass: "page-home"
     <h2 class="mb-4">Recent Resources</h2>
     <div class="row justify-content-start">
       {% assign limit = site.home.limit_resources | default: 6 %}
+      {% comment %}
+        Recency is derived from git history by scripts/build_recent.py and
+        written to _data/recent_resources.yml, so this list refreshes on every
+        build. Fall back to pub_date sorting when that data file is absent
+        (e.g. a local `jekyll serve` without running the build script).
+      {% endcomment %}
+      {% if site.data.recent_resources %}
+      {% for resource in site.data.recent_resources limit: limit %}
+      <div class="col-12 col-md-6 mb-3">
+        <div class="service service-summary">
+          <div class="service-content">
+            <h3 class="service-title">
+              <a href="{{ resource.url | relative_url }}">{{ resource.title }}</a>
+            </h3>
+            <p>{{ resource.summary | truncate: 120 }}</p>
+            {% for cat in resource.categories %}
+            <span class="badge badge-category">{{ cat | capitalize }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
       {% assign recent_resources = site.resources | where_exp: "item", "item.archived != true" | sort: "pub_date" | reverse %}
       {% for resource in recent_resources limit: limit %}
       <div class="col-12 col-md-6 mb-3">
@@ -71,6 +94,7 @@ bodyClass: "page-home"
         </div>
       </div>
       {% endfor %}
+      {% endif %}
     </div>
     <div class="row justify-content-center">
       <div class="col-auto">

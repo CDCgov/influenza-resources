@@ -21,6 +21,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Full history so scripts/build_recent.py can derive date-added
+          # from the commit that first introduced each resource.
+          fetch-depth: 0
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -48,6 +52,9 @@ jobs:
 
       - name: Fetch external URLs
         run: python scripts/fetch_external.py
+
+      - name: Generate recent resources list
+        run: python scripts/build_recent.py
 
       - name: Build Jekyll site
         working-directory: site

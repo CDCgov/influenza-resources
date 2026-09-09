@@ -11,6 +11,9 @@ site/_search/cache/local/*.txt
 site/_search/cache/external/*.txt
 site/_search/cache/manifest.json
 
+# Recent resources list (generated at build time by scripts/build_recent.py)
+site/_data/recent_resources.yml
+
 # Pagefind output (generated at build time)
 site/_site/pagefind/
 
