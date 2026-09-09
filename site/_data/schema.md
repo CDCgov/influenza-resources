@@ -55,7 +55,7 @@ supersedes: ""                                     # Slug of the resource this r
 | `category` | string | **yes** | Exactly one of: `laboratory`, `zoonotic`, `epidemiology`, `training`, `software`. Used for category landing pages and filtering. |
 | `summary` | string | **yes** | 1–3 sentence plain-text summary. Displayed in listings and search results. |
 | `source_url` | string | recommended | Canonical URL on cdc.gov or other authoritative source. Omit only if the resource exists solely as a local file. |
-| `local_path` | string | recommended | Repo-relative path to a committed PDF, DOCX, or PPTX. Used by `extract_local.py` to generate search text. |
+| `local_path` | string | recommended | Repo-relative path to a committed PDF, DOCX, PPTX, or XLSX. Used by `extract_local.py` to generate search text. |
 | `pub_date` | date | recommended | ISO 8601 date of publication or CDC clearance. Used for sorting. |
 | `tags` | list of strings | optional | Free-form tags for cross-cutting topics. |
 | `authors` | list of strings | optional | Authoring person(s) or group(s). |

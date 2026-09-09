@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract text from local PDFs, DOCX, and PPTX files referenced in _resources.
+"""Extract text from local PDFs, DOCX, PPTX, and XLSX files referenced in _resources.
 
 Walks site/_resources/ for Markdown files with a `local_path` front-matter field,
 extracts readable text from the referenced file, and writes it to
@@ -45,10 +45,25 @@ def _extract_pptx(path: Path) -> str:
     return "\n".join(texts)
 
 
+def _extract_xlsx(path: Path) -> str:
+    import openpyxl
+    wb = openpyxl.load_workbook(str(path), read_only=True, data_only=True)
+    lines = []
+    for sheet in wb.worksheets:
+        lines.append(sheet.title)
+        for row in sheet.iter_rows(values_only=True):
+            cells = [str(c) for c in row if c is not None]
+            if cells:
+                lines.append("\t".join(cells))
+    wb.close()
+    return "\n".join(lines)
+
+
 EXTRACTORS = {
     ".pdf": _extract_pdf,
     ".docx": _extract_docx,
     ".pptx": _extract_pptx,
+    ".xlsx": _extract_xlsx,
 }
 
 # ---------------------------------------------------------------------------
