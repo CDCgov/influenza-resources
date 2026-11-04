@@ -61,7 +61,8 @@ bodyClass: "page-resource"
 
         <div class="resource-links mb-4">
           {% if page.source_url %}
-          <a href="{{ page.source_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">View on CDC.gov &rarr;</a>
+          {% if page.source_url contains "cdc.gov" %}{% assign source_label = "View on CDC.gov" %}{% else %}{% assign source_label = "View source" %}{% endif %}
+          <a href="{{ page.source_url }}" class="button button-primary" target="_blank" rel="noopener noreferrer">{{ source_label }} &rarr;</a>
           {% endif %}
           {% if page.local_path %}
           <a href="{{ '/' | append: page.local_path | relative_url }}" class="button button-secondary" target="_blank" rel="noopener noreferrer">Download PDF</a>

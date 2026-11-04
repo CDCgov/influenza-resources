@@ -75,6 +75,10 @@
       vertical-align: top;
       border-top: 1px solid $white-offset;
     }
+    td:has(> svg:only-child) {
+      vertical-align: middle;
+      text-align: center;
+    }
     thead th {
       vertical-align: bottom;
       border-bottom: 1px solid $white-offset;

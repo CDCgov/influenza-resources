@@ -56,6 +56,13 @@ sass:
 plugins:
   - jekyll-environment-variables
 
+# ── Preserve generated artefacts across regeneration ──
+# Pagefind index and synthesised search pages are produced after `jekyll build`;
+# without this, `jekyll serve --watch` deletes them on every rebuild.
+keep_files:
+  - pagefind
+  - _search_pages
+
 # ── Exclude from build ───────────────────────
 exclude:
   - Gemfile
