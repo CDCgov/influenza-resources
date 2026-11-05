@@ -25,7 +25,7 @@ program it came from**, and **the type/subtype of the virus**.
 || Program | Who sequenced | What it covers |
 | :--- | :--- | :--- | :--- |
 || [**CDC Genomic Surveillance**](#cdc-genomic-surveillance) |CDC & [US National Influenza Reference Centers](https://www.cdc.gov/flu/php/genomic-sequencing-infrastructure/index.html#:~:text=virus%20genomic%20sequencing.-,National%20Influenza%20Reference%20Centers,-CDC%20funds%20three)| Uniform sampling from diagnostic ["right-sized"](https://aphl.org/docs/default-source/technical/ID-Influenza-Right-Size-Roadmap-Edition2.pdf) sampling through State Public Health Laboratories |
-|| [**CDC Enhanced State Genomic Surveillance**](#cdc-enhanced-state-genomic-surveillance) | [US Influenza Sequencing Centers](https://www.cdc.gov/flu/php/genomic-sequencing-infrastructure/index.html#:~:text=antivirals%20remain%20effective.-,Influenza%20Sequencing%20Centers,-Beginning%20in%202021) | Additional sampling from the ISC state's network |
+|| [**CDC Enhanced State Genomic Surveillance**](#cdc-enhanced-state-genomic-surveillance) | [US Influenza Sequencing Centers](https://www.cdc.gov/flu/php/genomic-sequencing-infrastructure/index.html#:~:text=antivirals%20remain%20effective.-,Influenza%20Sequencing%20Centers,-Beginning%20in%202021) and NIRCs | Additional state-level sampling from the ISC or NIRC state's network |
 || [**CDC Genomic Antiviral Surveillance**](#cdc-genomic-antiviral-surveillance) | CDC |  |
 |<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Umbrella project"><title>Umbrella project</title><path d="M2 12a10 10 0 0 1 20 0z"/><path d="M12 12v6a2 2 0 0 0 4 0"/><path d="M12 2V1"/></svg>| [**United States Genomic Surveillance**](#umbrella-project-united-states-genomic-surveillance) | United States' Public Health Laboratories (USPHLs) | Umbrella project of BioProjects created and populated by USPHLs|
 
@@ -57,7 +57,7 @@ mixed, unresolved, or spans more than one subtype in a single specimen.
 
 ## CDC Enhanced State Genomic Surveillance
 
-[US Influenza Sequencing Centers'](https://www.cdc.gov/flu/php/genomic-sequencing-infrastructure/index.html#:~:text=antivirals%20remain%20effective.-,Influenza%20Sequencing%20Centers,-Beginning%20in%202021) additional sampling from the ISC state's network 
+Additional state level sampling from the participating [US Influenza Sequencing Centers'](https://www.cdc.gov/flu/php/genomic-sequencing-infrastructure/index.html#:~:text=antivirals%20remain%20effective.-,Influenza%20Sequencing%20Centers,-Beginning%20in%202021) and NIRCs.
 
 | Subtype | BioProject | Released |
 | :--- | :--- | :--- |
